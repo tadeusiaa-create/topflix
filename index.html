@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TV Experience</title>
+    <title>TV Experience Modern</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
     <style>
-        /* Configuração do Fundo (Sala) */
+        /* Configuração Geral */
         body {
-            background-image: url('fundo01.png'); /* COLOQUE A FOTO DA SALA AQUI */
+            background-image: url('fundo01.png'); /* MANTIDO */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -20,82 +22,121 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            font-family: sans-serif;
+            font-family: 'Poppins', sans-serif; /* Fonte mais moderna */
         }
 
-        /* Container da TV (Mantém proporção 16:9) */
+        /* Efeito de Vidro (Glassmorphism) */
+        .glass {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Container da TV */
         .tv-wrapper {
             position: relative;
-            width: 90vw; /* Largura no celular */
-            max-width: 800px; /* Largura máxima no PC */
+            width: 90vw;
+            max-width: 800px;
             aspect-ratio: 16/9;
+            /* Sombra/Glow atrás da TV para destacar do fundo */
+            filter: drop-shadow(0 20px 50px rgba(0,0,0,0.6));
+            animation: float 6s ease-in-out infinite;
         }
 
-        /* O Vídeo (Fica atrás da moldura) */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* O Vídeo */
         .screen-video {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            /* AJUSTE FINO: Se o vídeo vazar da TV, diminua essas porcentagens */
             width: 94%; 
             height: 90%;
             object-fit: cover;
-            z-index: 1; /* Camada do meio */
+            z-index: 1;
             background: #000;
+            border-radius: 2px; /* Suavizar cantos */
         }
 
-        /* A Moldura da TV (PNG Transparente) */
+        /* A Moldura */
         .tv-frame {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 2; /* Camada de cima */
-            pointer-events: none; /* Permite clicar no vídeo através da moldura */
-            /* Certifique-se que sua imagem tv.png tem o centro transparente */
+            z-index: 2;
+            pointer-events: none;
         }
 
-        /* Botão Youtube Style */
-        .btn-shine {
+        /* Botão Principal (Link) Moderno */
+        .btn-modern {
             position: relative;
             overflow: hidden;
-            background: #FF0000;
+            background: linear-gradient(135deg, #FF0000 0%, #b30000 100%);
             color: white;
-            font-weight: bold;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(255, 0, 0, 0.6);
         }
         
-        /* Animação do brilho */
-        .btn-shine::before {
+        /* Brilho animado no botão */
+        .btn-modern::after {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
-            width: 100%;
+            width: 50%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
             transform: skewX(-20deg);
-            animation: shine 3s infinite;
+            animation: shine 4s infinite;
         }
 
         @keyframes shine {
             0% { left: -100%; }
-            20% { left: 100%; }
-            100% { left: 100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
         }
 
-        /* Controle de Som Discreto */
-        .mute-control {
-            z-index: 10;
-            cursor: pointer;
+        /* Animação de Entrada */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
         }
+        
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.3s; }
+
     </style>
 </head>
 <body>
 
-    <div class="tv-wrapper">
+    <div class="mb-4 fade-in-up">
+        <button onclick="shareContent()" class="glass text-white px-5 py-2 rounded-full flex items-center gap-2 hover:bg-white/10 transition duration-300 text-sm font-medium tracking-wide">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+            COMPARTILHAR
+        </button>
+    </div>
+
+    <div class="tv-wrapper fade-in-up delay-100">
         
         <video id="player" class="screen-video" autoplay loop muted playsinline>
             <source src="top.mp4" type="video/mp4">
@@ -103,18 +144,19 @@
 
         <img src="tv.png" class="tv-frame" alt="TV Frame">
         
-        <button onclick="toggleMute()" class="mute-control absolute top-[6%] right-[6%] bg-black/60 p-2 rounded-full text-white hover:bg-red-600 transition">
+        <button onclick="toggleMute()" class="absolute top-[6%] right-[6%] z-10 glass p-2 rounded-full text-white hover:bg-white/20 transition duration-300">
             <svg id="iconMute" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/></svg>
             <svg id="iconSound" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
         </button>
 
     </div>
 
-    <div class="mt-8 w-full max-w-[300px] px-4">
-        <button onclick="shareContent()" class="btn-shine w-full py-4 rounded-xl text-lg flex items-center justify-center gap-2 transform active:scale-95 transition">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
-            COMPARTILHAR
+    <div class="mt-8 w-full max-w-[320px] px-4 fade-in-up delay-200">
+        <button onclick="openLink('https://tadeus-ia.github.io/CineFlick/')" class="btn-modern w-full py-4 rounded-xl text-lg flex items-center justify-center gap-3">
+            <span>BAIXAR AGORA</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
         </button>
+        <p class="text-white/60 text-xs text-center mt-3 font-light">Toque no botão para acessar o conteúdo</p>
     </div>
 
     <script>
@@ -122,6 +164,7 @@
         const iconMute = document.getElementById('iconMute');
         const iconSound = document.getElementById('iconSound');
 
+        // Função de Som
         function toggleMute() {
             video.muted = !video.muted;
             if(video.muted){
@@ -133,19 +176,25 @@
             }
         }
 
+        // Função do Botão de Baixo (Link)
+        function openLink(url) {
+            window.location.href = url;
+        }
+
+        // Função do Botão de Cima (Compartilhar)
         async function shareContent() {
             try {
                 await navigator.share({
                     title: 'Assista na TV',
-                    text: 'Olha que incrível:',
+                    text: 'Dá uma olhada nesse conteúdo incrível:',
                     url: window.location.href
                 });
             } catch (err) {
+                // Fallback se o navegador não suportar compartilhamento nativo
                 navigator.clipboard.writeText(window.location.href);
-                alert('Link copiado!');
+                alert('Link copiado para a área de transferência!');
             }
         }
     </script>
 </body>
-
 </html>
